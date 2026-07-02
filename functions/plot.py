@@ -1,6 +1,5 @@
 import plotly.express as px
 from plotly.graph_objects import Figure
-
 from functions.data import download_history
 
 def plot_history(ticker:str) -> Figure:
