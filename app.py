@@ -2,9 +2,6 @@ import streamlit as st
 from functions.plot import plot_history
 from functions.backtest import ma_strategy
 
-st.title('Stocks History')
-st.write('Look the stock values.')
-
 ticker = st.sidebar.text_input(
     'Choose the ticker:',
     value = 'NVDA'
@@ -26,13 +23,24 @@ ma_long_window = st.sidebar.number_input(
     step = 1
 )
 
-fig = plot_history(ticker)
-st.plotly_chart(fig)
 
-df = ma_strategy(
-    ticker = ticker,
-    ma_short = ma_short_window,
-    ma_long = ma_long_window
-)
+tab1, tab2 = st.tabs([
+    'History', 'MA Strategy'
+])
 
-st.dataframe(df)
+with tab1:
+    st.title('Stocks History')
+    st.write('Look the stock values.')
+
+    fig = plot_history(ticker)
+    st.plotly_chart(fig)
+
+with tab2:
+    st.title('MA Strategy')
+    st.write('Look your portfolio')
+    df = ma_strategy(
+        ticker = ticker,
+        ma_short = ma_short_window,
+        ma_long = ma_long_window
+    )
+    st.dataframe(df)
